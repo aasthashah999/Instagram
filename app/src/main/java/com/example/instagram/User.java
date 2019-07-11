@@ -24,4 +24,6 @@ public class User extends ParseUser {
     public ParseFile getProfileImage(){
         return getParseFile("profileImage");
     }
+
+    public String getId(){return getString("objectId");}
 }

@@ -10,8 +10,6 @@
         android:id="@+id/imageViewUserPost1"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
         android:layout_marginTop="7dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
@@ -25,75 +23,79 @@
         android:id="@+id/tvPostUsername1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="309dp"
+        android:layout_marginRight="309dp"
+        android:layout_marginBottom="18dp"
         android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/imageViewUserPost1"
+        app:layout_constraintBottom_toTopOf="@+id/DetailPostIv"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/imageButtonheart1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginEnd="11dp"
-        android:layout_marginRight="11dp"
-        android:layout_marginBottom="17dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginLeft="11dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="24dp"
         android:background="#00FFFFFF"
         android:src="@drawable/ic_heart"
         app:layout_constraintBottom_toTopOf="@+id/textViewUsername1"
         app:layout_constraintEnd_toStartOf="@+id/imageButtonComment1"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DetailPostIv" />
 
     <ImageButton
         android:id="@+id/imageButtonComment1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="9dp"
-        android:layout_marginLeft="9dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginRight="9dp"
-        android:layout_marginBottom="17dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="24dp"
         android:background="#00FFFFFF"
         android:src="@drawable/ic_message"
         app:layout_constraintBottom_toTopOf="@+id/textViewUsername1"
         app:layout_constraintEnd_toStartOf="@+id/imageButtonDirectMessage1"
-        app:layout_constraintStart_toEndOf="@+id/imageButtonheart1" />
+        app:layout_constraintTop_toBottomOf="@+id/DetailPostIv" />
 
     <ImageButton
         android:id="@+id/imageButtonDirectMessage1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginLeft="14dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="278dp"
+        android:layout_marginRight="278dp"
+        android:layout_marginBottom="24dp"
         android:background="#00FFFFFF"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_directimages"
-        app:layout_constraintStart_toEndOf="@+id/imageButtonComment1"
-        tools:layout_editor_absoluteY="450dp" />
+        app:layout_constraintBottom_toTopOf="@+id/descriptiontv1"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonSaved1"
+        app:layout_constraintTop_toBottomOf="@+id/DetailPostIv" />
 
     <ImageButton
         android:id="@+id/imageButtonSaved1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="76dp"
+        android:layout_marginTop="11dp"
         android:background="#00FFFFFF"
         android:src="@drawable/ic_saved"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DetailPostIv" />
 
     <TextView
         android:id="@+id/textViewUsername1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:layout_marginLeft="11dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginRight="9dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="21dp"
         android:text="TextView"
-        app:layout_constraintEnd_toStartOf="@+id/descriptiontv1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageButtonheart1" />
 
@@ -101,9 +103,33 @@
         android:id="@+id/descriptiontv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
+        android:layout_marginStart="27dp"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="22dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/textViewUsername1"
-        tools:layout_editor_absoluteY="490dp" />
+        app:layout_constraintTop_toBottomOf="@+id/imageButtonDirectMessage1" />
+
+    <ImageView
+        android:id="@+id/DetailPostIv"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginBottom="7dp"
+        app:layout_constraintBottom_toTopOf="@+id/imageButtonheart1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewUserPost1"
+        app:srcCompat="@drawable/gradient_background" />
+
+    <TextView
+        android:id="@+id/createdAtv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="18dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUsername1" />
 </androidx.constraintlayout.widget.ConstraintLayout>

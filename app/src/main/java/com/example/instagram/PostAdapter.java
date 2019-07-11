@@ -2,6 +2,7 @@ package com.example.instagram;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,6 +91,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     Intent i = new Intent(context, detailView.class);
                     i.putExtra("username", posts.get(position).getUser().getUsername());
                     i.putExtra("description", posts.get(position).getDescription());
+                    i.putExtra("id", posts.get(position).getId());
+                    i.putExtra("date", posts.get(position).getCreatedAt());
+                    long dateMillis = posts.get(position).getCreatedAt().getTime();
+                    String relativeDate = DateUtils.getRelativeTimeSpanString(dateMillis,
+                            System.currentTimeMillis(), DateUtils.FORMAT_ABBREV_RELATIVE).toString();
+                    i.putExtra("date", relativeDate);
                     context.startActivity(i);
                 }
             });

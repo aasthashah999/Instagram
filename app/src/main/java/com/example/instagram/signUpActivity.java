@@ -20,7 +20,6 @@ import androidx.core.app.ActivityCompat;
 
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 import java.io.File;
@@ -74,8 +73,7 @@ public class signUpActivity extends AppCompatActivity {
     }
 
     public void setUser(){
-        Toast.makeText(this, "in function", Toast.LENGTH_SHORT).show();
-        ParseUser user = new ParseUser();
+        User user = new User();
         user.setUsername(username.getText().toString());
         if (password.getText().toString().equals(confirmPassword.getText().toString())){
             user.setPassword(password.getText().toString());
