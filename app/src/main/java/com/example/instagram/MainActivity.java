@@ -20,12 +20,16 @@ public class MainActivity extends AppCompatActivity {
     Button signUp;
     EditText tvusername;
     EditText tvpassword;
+    ParseUser currentUser = ParseUser.getCurrentUser();
 
     /**
      * RETURN: void
      * Params: bundle that represents a state
      * This method sets the layout and calls a helper function for logging in.
      **/
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +38,14 @@ public class MainActivity extends AppCompatActivity {
         tvusername = findViewById(R.id.tvusername);
         tvpassword = findViewById(R.id.tvNameInput);
         signUp = findViewById(R.id.buttonSignUp);
+
+        if(currentUser != null){
+            Intent i = new Intent(this, HomeActivity.class);
+            startActivity(i);
+        }else{
+            Toast.makeText(this, "Please login", Toast.LENGTH_LONG).show();
+        }
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

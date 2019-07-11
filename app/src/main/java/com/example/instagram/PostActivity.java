@@ -34,7 +34,8 @@ public class PostActivity extends AppCompatActivity {
     private CameraKitView cameraKitView;
     String [] appPermissions = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
     };
 
 
@@ -43,6 +44,7 @@ public class PostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+
         etdescription = findViewById(R.id.etDescription);
         addImage = findViewById(R.id.button);
         getPicture = findViewById(R.id.takePicture);
@@ -103,7 +105,7 @@ public class PostActivity extends AppCompatActivity {
                     e.printStackTrace();
                     return;
                 }else{
-                    Toast.makeText(getApplicationContext(), "success!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "success!!", Toast.LENGTH_LONG).show();
                 }
             }
         });
