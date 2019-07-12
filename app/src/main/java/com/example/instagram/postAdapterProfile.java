@@ -24,7 +24,6 @@ public class postAdapterProfile extends RecyclerView.Adapter<postAdapterProfile.
     @NonNull
     @Override
     public postAdapterProfile.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        posts = new ArrayList<>();
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -40,8 +39,9 @@ public class postAdapterProfile extends RecyclerView.Adapter<postAdapterProfile.
     public void onBindViewHolder(@NonNull postAdapterProfile.ViewHolder holder, int position) {
         final Post post = posts.get(position);
         //TODO images
-
-        Glide.with(context).load(post.getImage().getUrl()).into(holder.postImage);
+        if(post.getImage() != null){
+            Glide.with(context).load(post.getImage().getUrl()).into(holder.postImage);
+        }
 
     }
 

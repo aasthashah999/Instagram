@@ -22,6 +22,7 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 public class signUpActivity extends AppCompatActivity {
@@ -116,7 +117,12 @@ public class signUpActivity extends AppCompatActivity {
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String imgDecodableString = cursor.getString(columnIndex);
             cursor.close();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            byte[] image = stream.toByteArray();
+
+
             profileImage.setImageBitmap(BitmapFactory.decodeFile(imgDecodableString));
+
         }else{
             Toast.makeText(this, "Please select an image", Toast.LENGTH_LONG).show();
         }
