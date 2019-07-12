@@ -1,89 +1,56 @@
 package com.example.instagram;
 
-import android.Manifest;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.instagram.fragments.PostsFragment;
+import com.example.instagram.fragments.composeFragemnt;
+import com.example.instagram.fragments.profileFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
 
-    Button addImage;
-    RecyclerView rvPosts;
-    ArrayList<Post> posts;
-    PostAdapter adapter;
-    SwipeRefreshLayout swipe;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        addImage = findViewById(R.id.addImageButton);
-        rvPosts = findViewById(R.id.rvPosts);
-        posts = new ArrayList<>();
-        swipe = findViewById(R.id.swipeContainer);
-        adapter = new PostAdapter(posts);
-        rvPosts.setLayoutManager(new LinearLayoutManager(this));
-        rvPosts.setAdapter(adapter);
-        getPosts();
-        ActivityCompat.requestPermissions(HomeActivity.this,
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                1);
-        ActivityCompat.requestPermissions(HomeActivity.this,
-                new String[]{Manifest.permission.CAMERA},
-                1);
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        addImage.setOnClickListener(new View.OnClickListener() {
+
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                Intent i = new Intent(HomeActivity.this, PostActivity.class);
-                startActivity(i);
-            }
-        });
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment2;
+                fragment2 = new composeFragemnt();
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        Fragment fragment1;
+                        fragment1 = new PostsFragment();
+                        fragmentManager.beginTransaction().replace(R.id.fragmentArea,fragment1).commit();
+                        return true;
+                    case R.id.compose:
+                        fragmentManager.beginTransaction().replace(R.id.fragmentArea,fragment2).commit();
+                        return true;
+                    case R.id.profile:
+                        Fragment fragment3;
+                        fragment3 = new profileFragment();
+                        fragmentManager.beginTransaction().replace(R.id.fragmentArea,fragment3).commit();
+                        return true;
+                    default: return true;
 
-        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getPosts();
-            }
-        });
-        swipe.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-    }
-
-    public void getPosts(){
-        final Post.Query postsQuery = new Post.Query();
-        postsQuery.getTop().withUser();
-
-        postsQuery.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> objects, ParseException e) {
-                if (e == null){
-                    for(int i = 0; i < objects.size(); i++){
-                        Post post;
-                        post = objects.get(i);
-                        posts.add(0, post);
-                        adapter.notifyDataSetChanged();
-                        swipe.setRefreshing(false);
-                    }
-                }else{
-                    e.printStackTrace();
                 }
+
             }
         });
     }
+
 }

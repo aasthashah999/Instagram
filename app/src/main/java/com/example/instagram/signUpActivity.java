@@ -19,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.parse.ParseException;
-import com.parse.ParseFile;
+import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 import java.io.File;
@@ -35,7 +35,6 @@ public class signUpActivity extends AppCompatActivity {
     Button signUp;
     public final int RESULT_LOAD_IMAGE = 20;
     File file;
-    Uri selectedImage;
     String [] appPermissions = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -66,14 +65,16 @@ public class signUpActivity extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setUser();
+                ParseUser user = new ParseUser();
+                setUser(user);
+                //saveProfileImage(user);
+
             }
         });
 
     }
 
-    public void setUser(){
-        User user = new User();
+    public void setUser(ParseUser user){
         user.setUsername(username.getText().toString());
         if (password.getText().toString().equals(confirmPassword.getText().toString())){
             user.setPassword(password.getText().toString());
@@ -81,8 +82,6 @@ public class signUpActivity extends AppCompatActivity {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_LONG).show();
         }
         user.setEmail(email.getText().toString());
-        user.put("profileImage", new ParseFile(file));
-
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException e) {
@@ -109,7 +108,7 @@ public class signUpActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data!= null){
-            selectedImage = data.getData();
+            Uri selectedImage = data.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
             Cursor cursor = getContentResolver().query(selectedImage,filePathColumn,null, null, null);
             cursor.moveToFirst();
@@ -118,9 +117,24 @@ public class signUpActivity extends AppCompatActivity {
             String imgDecodableString = cursor.getString(columnIndex);
             cursor.close();
             profileImage.setImageBitmap(BitmapFactory.decodeFile(imgDecodableString));
-            file = new File(selectedImage.getPath());
         }else{
             Toast.makeText(this, "Please select an image", Toast.LENGTH_LONG).show();
         }
     }
+
+//    public void saveProfileImage(ParseUser user){
+//        user.put("profileImage", new ParseFile(file));
+//        user.saveInBackground(new SaveCallback() {
+//            @Override
+//            public void done(ParseException e) {
+//                if(e == null){
+//                    Toast.makeText(getApplicationContext(), "Signed Up!", Toast.LENGTH_LONG).show();
+//                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+//                    startActivity(i);
+//                }else{
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
+//    }
 }
