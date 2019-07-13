@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,17 +49,17 @@ public class profileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        profileRV = view.findViewById(R.id.profilerv);
+        profileRV = view.findViewById(R.id.profilerv1);
         profileRV.setLayoutManager(new GridLayoutManager(getContext(), 3));
         posts = new ArrayList<>();
         adapter = new postAdapterProfile(posts);
         logoutButton = view.findViewById(R.id.logoutButton);
         user = ParseUser.getCurrentUser();
-        tv = view.findViewById(R.id.tvprofileUsername);
+        tv = view.findViewById(R.id.tvprofileUsername2);
         tv.setText(user.getUsername());
         profileRV.setAdapter(adapter);
         getPosts();
-        profileImage = view.findViewById(R.id.imageButtonProfile);
+        profileImage = view.findViewById(R.id.imageButtonProfile1);
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,17 +85,14 @@ public class profileFragment extends Fragment {
     }
 
     public void getPosts(){
-        Toast.makeText(getContext(),user.getUsername(), Toast.LENGTH_LONG ).show();
         final Post.Query postsQuery = new Post.Query();
         postsQuery.getTop().withUser();
         postsQuery.whereEqualTo("user", user);
-        Toast.makeText(getContext(),user.getObjectId(), Toast.LENGTH_LONG ).show();
         postsQuery.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> objects, ParseException e) {
                 if (e == null){
                     for(int i = 0; i < objects.size(); i++){
-                        Toast.makeText(getContext(),"In function", Toast.LENGTH_LONG ).show();
                         Post post;
                         post = objects.get(i);
                         posts.add(0, post);

@@ -2,10 +2,12 @@ package com.example.instagram;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,14 +15,19 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.instagram.fragments.postProfile;
 
 import java.util.ArrayList;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     public ArrayList<Post> posts;
+    ImageButton heartButton;
     Context context;
 
     public PostAdapter(ArrayList<Post> posts1){
@@ -49,8 +56,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         //TODO post image
         holder.username2.setText(post.getUser().getUsername());
         holder.description.setText(post.getDescription());
+        if(post.getImage() != null){
+            Glide.with(context).load(post.getImage().getUrl()).into(holder.postImage);
+        }
 
-        Glide.with(context).load(post.getImage().getUrl()).into(holder.postImage);
 
     }
 
@@ -66,10 +75,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         ImageButton message;
         ImageButton save;
         ImageView profile;
-        TextView username;
+        Button username;
         TextView username2;
         TextView description;
         CardView cardView;
+        TextView likestv;
 
         public ViewHolder(View itemView){
             super(itemView);
@@ -79,10 +89,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
             message = itemView.findViewById(R.id.imageButtonDirectMessage);
             save = itemView.findViewById(R.id.imageButtonSaved);
             profile = itemView.findViewById(R.id.imageViewUserPost);
-            username = itemView.findViewById(R.id.tvPostUsername);
+            username = itemView.findViewById(R.id.buttonUsername);
             username2 = itemView.findViewById(R.id.textViewUsername);
             description = itemView.findViewById(R.id.descriptiontv);
             cardView = itemView.findViewById(R.id.cardView);
+            likestv = itemView.findViewById(R.id.likes);
+            final Boolean clicked;
+            clicked = false;
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -100,6 +113,53 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                     context.startActivity(i);
                 }
             });
+
+            username.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    Post post = posts.get(position);
+                    postProfile fragment = new postProfile ();
+                    FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.fragmentArea, fragment);
+                    Bundle args = new Bundle();
+                    //args.putString("user", post.getUser().getObjectId());
+                    args.putParcelable("user", post.getUser());
+                    fragment.setArguments(args);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            });
+
+            like.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if(clicked == false){
+                        int position = getAdapterPosition();
+                        Post post = posts.get(position);
+                        Number likes = post.getNumber("likes");
+                        int like1 = likes.intValue() + 1;
+                        likestv.setText(Integer.toString(like1));
+                        likes = (Number) like1;
+                        post.put("likes", likes);
+                        //like.setBackground(drawable/ic_heartfilled);
+                        //like.setImageDrawable("@drawable/ic_heartfilled");
+                    } else{
+
+                    }
+
+
+                }
+            });
+        }
+
+        public void updateLikes(Post post){
+            Number likes = post.getNumber("likes");
+            int like1 = likes.intValue() + 1;
+            likestv.setText(Integer.toString(like1));
+            likes = (Number) like1;
+            post.put("likes", likes);
         }
     }
 }
