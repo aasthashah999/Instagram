@@ -8,7 +8,7 @@ Time spent: **30** hours spent in total
 
 The following **required** functionality is completed:
 
-- [ ] User sees app icon in home screen.
+- [x] User sees app icon in home screen.
 - [x] User can sign up to create a new account using Parse authentication
 - [x] User can log in and log out of his or her account
 - [x] The current signed in user is persisted across app restarts
@@ -40,8 +40,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1.It would be awesome to add the ability to have followers. 
+2. Having an explore fragment would be awesome also. 
 
 ## Video Walkthrough
 
